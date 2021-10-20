@@ -19,16 +19,15 @@ namespace Homework.Controllers
             }
             return Json(results);
         }
-        public IActionResult Set([FromBody] Classes model) {
+        public IActionResult Create([FromBody] Classes model) {
             var result = new BasicResult();
             try {
                 using (var conn = new SqlConnection(clsDefine.ConnStr)) {
-                    var affectedRows = conn.Insert(model);
-                    if (affectedRows > 0) {
-                        result.success = true;
-                    }
+                    conn.Insert(model);
+                    result.success = true;
                 }
             } catch (Exception ex) {
+                result.message = ex.Message;
                 //_logger.LogError(ex.Message);
             }
             return Json(result);
@@ -43,6 +42,7 @@ namespace Homework.Controllers
                     }
                 }
             } catch (Exception ex) {
+                result.message = ex.Message;
                 //_logger.LogError(ex.Message);
             }
             return Json(result);
@@ -57,18 +57,10 @@ namespace Homework.Controllers
                     }
                 }
             } catch (Exception ex) {
+                result.message = ex.Message;
                 //_logger.LogError(ex.Message);
             }
             return Json(result);
-        }
-        public IActionResult test() {
-            var sql = "SELECT * FROM Students";
-            using (var conn = new SqlConnection(clsDefine.ConnStr)) {
-                //本期
-                var temp = conn.Query(sql).AsList();
-                return Json(temp);
-            }
-            //return Content("OK");
         }
     }
 }
