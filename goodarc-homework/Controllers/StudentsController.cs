@@ -19,16 +19,15 @@ namespace Homework.Controllers
             }
             return Json(results);
         }
-        public IActionResult Set([FromBody] Students model) {
+        public IActionResult Create([FromBody] Students model) {
             var result = new BasicResult();
             try {
                 using (var conn = new SqlConnection(clsDefine.ConnStr)) {
-                    var affectedRows = conn.Insert(model);
-                    if (affectedRows > 0) {
-                        result.success = true;
-                    }
+                     conn.Insert(model);
+                     result.success = true;
                 }
             } catch (Exception ex) {
+                result.message = ex.Message;
                 //_logger.LogError(ex.Message);
             }
             return Json(result);
@@ -43,6 +42,7 @@ namespace Homework.Controllers
                     }
                 }
             } catch (Exception ex) {
+                result.message = ex.Message;
                 //_logger.LogError(ex.Message);
             }
             return Json(result);
@@ -57,6 +57,7 @@ namespace Homework.Controllers
                     }
                 }
             } catch (Exception ex) {
+                result.message = ex.Message;
                 //_logger.LogError(ex.Message);
             }
             return Json(result);

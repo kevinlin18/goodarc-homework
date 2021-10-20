@@ -9,32 +9,6 @@
       <v-toolbar-title class="headline pl-2">
         <span class="font-weight-bold">我的Vuetify專案 - {{ $route.name }}</span>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <!-- 工作列上的按鈕 -->
-      <v-toolbar-items class="hidden-sm-and-down">
-        <v-menu offset-y :close-on-content-click="false">
-          <template v-slot:activator="{ on }">
-            <v-btn 
-              text 
-              v-on="on"
-              class="hidden-sm-and-down">
-              <v-icon>mdi-account-circle-outline</v-icon>
-              {{ userInfo.accnam }}
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item>
-              <v-list-item-content>
-                <v-switch
-                  label="關燈"
-                  v-model="ui.darkTheme"
-                  hide-details
-                ></v-switch>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </v-toolbar-items>
     </v-app-bar>
     <!-- 側欄 -->
     <v-navigation-drawer 
@@ -80,15 +54,12 @@
 </template>
 
 <script>
-//import { postRequest } from '@/util/restful'
 export default {
   name: "app",
   data() {
     return {
-      navLinks: [],
       ui:{
         drawer: null,
-        darkTheme: false,
         sidebars: [
           { 
             text: '功能清單',
@@ -102,38 +73,9 @@ export default {
             ]
           }
         ]
-      },
-      userInfo:{
-        accnam:'',
-        acc_nm:'',
-        acc_no:'',
-        limite:''
       }
     }
   },
-  mounted(){
-    this.checkTheme()
-    
-  },
-  methods: {
-    checkTheme(){
-      if (localStorage.darkTheme) {
-        this.$vuetify.theme.dark = true
-        this.ui.darkTheme = true
-      }
-    },
-  },
-  watch: {
-    'ui.darkTheme':function(darkTheme){
-      if (darkTheme) {
-        localStorage.darkTheme = true
-        this.$vuetify.theme.dark = true
-      } else {
-        localStorage.removeItem("darkTheme")
-        this.$vuetify.theme.dark = false
-      }
-    }
-  }
 }
 </script>
 

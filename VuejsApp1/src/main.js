@@ -11,6 +11,11 @@ import vuetify from './plugins/vuetify';
 import axios from 'axios'
 Vue.prototype.$ajax= axios.post
 
+// moment
+import moment from 'moment'
+Vue.prototype.moment = moment
+Vue.prototype.moment.locale('zh-tw')
+
 Vue.config.productionTip = false;
 
 new Vue({
