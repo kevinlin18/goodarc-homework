@@ -14,7 +14,10 @@
                   v-model="search.st_id"
                   outlined
                   dense
-                  hide-details
+                  :disabled="ui.editing"
+                  placeholder="格式：S0000"
+                  maxlength="5"
+                  counter
                 ></v-text-field>
               </v-col>
               <v-col cols="3">
@@ -25,7 +28,8 @@
                   v-model="search.st_name"
                   outlined
                   dense
-                  hide-details
+                  maxlength="20"
+                  counter
                 ></v-text-field>
               </v-col>
               <v-col cols="3">
@@ -36,7 +40,8 @@
                   v-model="search.st_email"
                   outlined
                   dense
-                  hide-details
+                  maxlength="50"
+                  counter
                 ></v-text-field>
               </v-col>
               <v-col cols="3">
@@ -47,7 +52,9 @@
                   v-model="search.st_birthday"
                   outlined
                   dense
-                  hide-details
+                  maxlength="10"
+                  placeholder="格式：YYYY-MM-DD"
+                  counter
                 ></v-text-field>
               </v-col>
               <v-col cols="12" class="text-center">
@@ -65,6 +72,13 @@
                   v-else
                   >
                   新增</v-btn>
+                <v-btn
+                  depressed
+                  dark
+                  color="green"
+                  @click="clearSearch()"
+                  >
+                  清除</v-btn>
               </v-col>
             </v-row>
           </v-container>
@@ -164,26 +178,29 @@
         this.$ajax('./students/create', this.search).then((res) => {
           if (!res.data.success){
             alert('error!')
+          } else {
+            this.get()
+            this.clearSearch()
           }
-          this.get()
-          this.clearSearch()
         })
       },
       updateItem(){
         this.$ajax('./students/update', this.search).then((res) => {
           if (!res.data.success){
             alert('error!')
+          } else {
+            this.get()
+            this.clearSearch()
           }
-          this.get()
-          this.clearSearch()
         })
       },
       deleteItem(model){
         this.$ajax('./students/delete', model).then((res) => {
           if (!res.data.success){
             alert('error!')
+          } else {
+            this.get()
           }
-          this.get()
         })
       }
     }

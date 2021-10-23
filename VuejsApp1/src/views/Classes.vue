@@ -14,7 +14,10 @@
                   v-model="search.cl_id"
                   outlined
                   dense
-                  hide-details
+                  :disabled="ui.editing"
+                  placeholder="格式：C000"
+                  maxlength="4"
+                  counter
                 ></v-text-field>
               </v-col>
               <v-col cols="3">
@@ -25,7 +28,8 @@
                   v-model="search.cl_name"
                   outlined
                   dense
-                  hide-details
+                  maxlength="20"
+                  counter
                 ></v-text-field>
               </v-col>
               <v-col cols="3">
@@ -47,7 +51,8 @@
                   v-model="search.cl_location"
                   outlined
                   dense
-                  hide-details
+                  maxlength="20"
+                  counter
                 ></v-text-field>
               </v-col>
               <v-col cols="3">
@@ -58,7 +63,8 @@
                   v-model="search.cl_teacher"
                   outlined
                   dense
-                  hide-details
+                  maxlength="20"
+                  counter
                 ></v-text-field>
               </v-col>
               <v-col cols="12" class="text-center">
@@ -76,6 +82,13 @@
                   v-else
                   >
                   新增</v-btn>
+                <v-btn
+                  depressed
+                  dark
+                  color="green"
+                  @click="clearSearch()"
+                  >
+                  清除</v-btn>
               </v-col>
             </v-row>
           </v-container>
@@ -176,26 +189,29 @@
         this.$ajax('./classes/create', this.search).then((res) => {
           if (!res.data.success){
             alert('error!')
+          } else {
+            this.get()
+            this.clearSearch()
           }
-          this.get()
-          this.clearSearch()
         })
       },
       updateItem(){
         this.$ajax('./classes/update', this.search).then((res) => {
           if (!res.data.success){
             alert('error!')
+          } else {
+            this.get()
+            this.clearSearch()
           }
-          this.get()
-          this.clearSearch()
         })
       },
       deleteItem(model){
         this.$ajax('./classes/delete', model).then((res) => {
           if (!res.data.success){
             alert('error!')
+          } else {
+            this.get()
           }
-          this.get()
         })
       }
     }

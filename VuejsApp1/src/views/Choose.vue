@@ -22,6 +22,7 @@
               </v-col>
               <v-col cols="12">
                 <v-checkbox v-for="(elem,index) in drop.classes"
+                  hide-details
                   :key="index"
                   :label="elem.text"
                   :value="elem.value"
@@ -50,7 +51,7 @@
                   color="green"
                   @click="clearSearch()"
                   >
-                  清理</v-btn>
+                  清除</v-btn>
               </v-col>
             </v-row>
           </v-container>
@@ -153,24 +154,27 @@
         this.$ajax('./choose/create', this.search).then((res) => {
           if (!res.data.success){
             alert('error!')
+          } else {
+            this.clearSearch()
           }
-          this.clearSearch()
         })
       },
       updateItem(){
         this.$ajax('./choose/update', this.search).then((res) => {
           if (!res.data.success){
             alert('error!')
+          } else {
+            this.clearSearch()
           }
-          this.clearSearch()
         })
       },
       deleteItem(model){
         this.$ajax('./choose/delete', model).then((res) => {
           if (!res.data.success){
             alert('error!')
+          } else {
+            this.clearSearch()
           }
-          this.clearSearch()
         })
       }
     }
